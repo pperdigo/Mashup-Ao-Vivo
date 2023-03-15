@@ -1,0 +1,40 @@
+.current-selections.visible {
+  display: block
+}
+
+.current-selections .selected-field-container {
+  margin-bottom: 15px;
+  margin-top: 0
+}
+
+.current-selections .selected-field-label {
+  font-weight: 400;
+  padding: 5px 5px 1px 5px;
+  font-size: 11px
+}
+
+.current-selections .selected-field-value {
+  margin-top: 5px;
+  width: 100%;
+  padding: 3px 8px;
+  box-sizing: border-box;
+  position: relative;
+  padding-right: 30px
+}
+
+.current-selections .clear-field {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  height: 15px;
+  width: 15px;
+  border-radius: 10px;
+  font-size: 16px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer
+}
+
+.current-selections {
+  word-break: break-all
+}
