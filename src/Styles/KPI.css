@@ -1,0 +1,28 @@
+.kpi-fundo{
+    display: flex;
+}
+
+.kpi-title-row{
+    color: white;
+    text-shadow: 4px 4px 4px rgb(0 0 0 / 25%);
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.kpi-content-row{
+    display: flex;
+    justify-content: center;
+}
+
+.kpi-icon{
+    height: 65px;
+    width: 65px;
+    align-self: center;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.kpi-value{
+    color: white;
+    font-size: 100px;
+}

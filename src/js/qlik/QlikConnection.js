@@ -39,7 +39,7 @@ async function login() {
     });
 }
 
-export default new Promise((resolve) => {
+const appPromise = new Promise((resolve) => {
     login().then(()=>{
         window.require(['js/qlik'], (qlik) => {
             console.log('API Global Importada', qlik)
@@ -51,3 +51,4 @@ export default new Promise((resolve) => {
     })
 })
 
+export default appPromise

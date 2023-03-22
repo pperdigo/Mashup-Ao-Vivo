@@ -7,36 +7,38 @@ function CurrentSelections(props){
   const id = useRef("")
   const app = useContext(AppContext)
 
- useEffect(()=>{
+    useEffect(()=>{
 
-   function getSelections(){
-       app.getList("CurrentSelections", (reply)=>{
- 
-           const selections = reply.qSelectionObject.qSelections;
- 
-           let currentSelections = [];
- 
-           selections.forEach(element => {
-               currentSelections.push({
-                   field: element.qField,
-                   values: element.qSelected
-               })
-           });
-           
-           id.current = reply.qInfo.qId
-           setSelections(currentSelections)
-           return () => {
-               app.destroySessionObject(id.current)
-           } 
-           
-       })
- 
-   }
+        function getSelections(){
+            app.getList("CurrentSelections", (reply)=>{
 
-   getSelections();
+                const selections = reply.qSelectionObject.qSelections;
 
-   
- },[props.app])
+                let currentSelections = [];
+
+                selections.forEach(element => {
+                    currentSelections.push(
+                        {
+                            field: element.qField,
+                            values: element.qSelected
+                        }
+                    )
+                });
+
+                id.current = reply.qInfo.qId
+                setSelections(currentSelections)
+            })
+
+        }
+
+        getSelections();
+  
+        return () => {
+            app.destroySessionObject(id.current)
+        } 
+
+
+    },[app])
 
  
 
