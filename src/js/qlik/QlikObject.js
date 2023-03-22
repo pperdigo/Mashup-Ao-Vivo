@@ -15,8 +15,8 @@ function QlikObject(props) {
       return () => {
           app.destroySessionObject(id.current)
       } 
-       
-},[])
+    // eslint-disable-next-line
+    },[])
   
 
   const height = props.height || 50;

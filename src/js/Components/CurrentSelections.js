@@ -36,7 +36,7 @@ function CurrentSelections(props){
    getSelections();
 
    
- },[props.app])
+ },[app])
 
  
 
@@ -49,12 +49,12 @@ function CurrentSelections(props){
 
      if(selections.length > 0){
          content = selections.map(item => {
-             return <div className="selected-block">
+             return <div key={item.field + '/' + item.field} className="selected-block">
                          <div className="current-information">
                              <div className="current-title-div">{item.field}</div>
                              <div className="filters-items">
                                  <div>
-                                     {item.values}
+                                     {item.field}
                                  </div>
                                  <button onClick={()=>{clearField(item.field)}} className="x-clear-btn"><img src={closeIcon} alt="" width="10px"/></button>
                              </div>

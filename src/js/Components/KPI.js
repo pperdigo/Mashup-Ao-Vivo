@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef, useContext, useCallback } from 'react'
-import App, { AppContext } from '../../App'
+import { AppContext } from '../../App'
+
 import dollarIcon from '../../img/material-symbols_attach-money.svg'
 import lineIcon from '../../img/tabler_chart-infographic.svg'
 import targetIcon from '../../img/octicon_goal-24.svg'
 
+import '../../Styles/KPI.css'
 
 function KPI(props){
     const app = useContext(AppContext)
@@ -27,8 +29,8 @@ function KPI(props){
         }
 
         return defs[props.title]
-
-    })
+    // eslint-disable-next-line
+    }, [])
 
     useEffect(()=>{
         app.createCube({
@@ -50,13 +52,31 @@ function KPI(props){
             qSuppressMissing: false,
             qInterColumnSortOrder: [],
         }, (reply) => {
-            console.log(props.title, reply)
+            const result = reply.qHyperCube.qDataPages[0].qMatrix[0][0].qNum
+            id.current = reply.qInfo.qId
+
+            setData(result)
         })
-    })
+
+        return () => {
+            app.destroySessionObject(id.current)
+        }
+    // eslint-disable-next-line
+    }, [getDefs])
+
+    if (!data) return 'Carregando.'
 
     return(
-        <div style = {{color: 'white'}}>
-            {props.title}
+        <div className='fundo-kpi'>
+            <div className='kpi-title-row'>
+                {props.title}
+            </div>
+            <div className='kpi-content-row'>
+                <img className='kpi-icon' src={getDefs().icon}/>
+                <div className='kpi-content'>
+                    {data.toLocaleString('pt-BR', {style: 'percent'})}
+                </div>
+            </div>
         </div>
     )
 }
