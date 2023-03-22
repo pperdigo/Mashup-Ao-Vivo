@@ -72,7 +72,7 @@ function KPI(props){
                 {props.title}
             </div>
             <div className='kpi-content-row'>
-                <img className='kpi-icon' src={getDefs().icon}/>
+                <img alt='' className='kpi-icon' src={getDefs().icon}/>
                 <div className='kpi-content'>
                     {data.toLocaleString('pt-BR', {style: 'percent'})}
                 </div>

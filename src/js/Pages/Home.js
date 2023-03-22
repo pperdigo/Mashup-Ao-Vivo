@@ -2,6 +2,7 @@
 import '../../Styles/Home.css'
 import NavBar from '../Components/NavBar'
 import KPI from '../Components/KPI'
+import PieChart from '../Components/PieChart'
 
 function Home(){
     return(
@@ -15,11 +16,10 @@ function Home(){
                         / >
                     </div>
                     <div className='col-4 pt-2'>
-                        {/* <PieChart
-                            app = {props.app}
+                        <PieChart
                             title = {'By Product Subgroup'}
-                            minAngle = {30}
-                        / > */}
+                            minAngle = {25}
+                        / >
                     </div>
                     <div className='col-4'>
                         {/* <LineChart
@@ -37,11 +37,10 @@ function Home(){
                         / >
                     </div>
                     <div className='col-4 pt-2'>
-                        {/* <PieChart
-                            app = {props.app}
+                        <PieChart
                             title = {'By State'}                                                      
-                            minAngle = {30}
-                        / > */}
+                            minAngle = {25}
+                        / >
                     </div>
                     <div className='col-4'>
                         {/* <LineChart
@@ -59,11 +58,10 @@ function Home(){
                         / >
                     </div>
                     <div className='col-4 pt-2'>
-                        {/* <PieChart
-                            app = {props.app}
+                        <PieChart
                             title = {'By Sales Rep'}
                             minAngle = {15}
-                        / > */}
+                        / >
                     </div>
                     <div className='col-4'>
                         {/* <LineChart
