@@ -3,6 +3,7 @@ import '../../Styles/Home.css'
 import NavBar from '../Components/NavBar'
 import KPI from '../Components/KPI'
 import PieChart from '../Components/PieChart'
+import LineChart from '../Components/LineChart'
 
 function Home(){
     return(
@@ -22,10 +23,9 @@ function Home(){
                         / >
                     </div>
                     <div className='col-4'>
-                        {/* <LineChart
-                            app = {props.app}
+                        <LineChart
                             title = {'Margin Amount Over Time'}
-                        / > */}
+                        / >
                     </div>
                 </div>
 
@@ -43,10 +43,9 @@ function Home(){
                         / >
                     </div>
                     <div className='col-4'>
-                        {/* <LineChart
-                            app = {props.app}
+                        <LineChart
                             title = {'Sales Over Time'}
-                        / > */}
+                        / >
                     </div>
                 </div>
                 
@@ -64,10 +63,9 @@ function Home(){
                         / >
                     </div>
                     <div className='col-4'>
-                        {/* <LineChart
-                            app = {props.app}
+                        <LineChart
                             title = {'Budget Over Time'}
-                        / > */}
+                        / >
                     </div>
                 </div>
             </div>

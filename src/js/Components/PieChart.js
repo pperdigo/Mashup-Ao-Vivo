@@ -56,15 +56,11 @@ function PieChart(props){
             qSuppressMissing: false,
             qInterColumnSortOrder: [1,0],
         }, (reply) => {
-            console.log('Pie Chart', props.title, reply)
-
             const matrix = reply.qHyperCube.qDataPages[0].qMatrix
 
             const data = matrix.map((row) => {
                 return {name: row[0].qText, value: row[1].qNum}
             })
-
-            console.log('data', data)
 
             const totalValue = data.reduce((acum, curr) => acum + curr.value, 0)
             const treshold = props.minAngle / 360 * totalValue
@@ -98,7 +94,7 @@ function PieChart(props){
               text: props.title,
               textStyle:{
                   color: 'white',
-                  fontWeight: 'normal'
+                  fontWeight: 'bold'
               }
             },
             tooltip: {
@@ -140,7 +136,9 @@ function PieChart(props){
     if (!data) return 'Carregando'
 
     return (
-        <GenericChart option = {getOption()} />
+        <GenericChart 
+            option = {getOption()}   
+        />
     )
 
 }
