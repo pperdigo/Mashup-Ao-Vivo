@@ -36,5 +36,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.18.6",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-flow": "^2.29.1",
+    "eslint-plugin-jsx": "^0.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-typescript": "^0.14.0",
+    "prettier": "^2.8.7"
   }
 }
