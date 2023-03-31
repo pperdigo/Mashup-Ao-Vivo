@@ -44,6 +44,41 @@ const GenericChart = (props) => {
     updateChart();
   }, [chart, props.notMerge, props.option]);
 
+  //Bindar onClickEvent
+  chart?.on("click", (params) => {
+    console.log("prevSelections: ", props.selections);
+    console.log("dataIndex: ", params.dataIndex);
+    if (props.selections.length === 0) {
+      console.log("inicial");
+      chart.dispatchAction({
+        type: "highlight",
+        seriesIndex: params.seriesIndex,
+        dataIndex: params.dataIndex,
+      });
+      props.selections.push(params.name);
+    } else if (props.selections.length > 0) {
+      if (props.selections.includes(params.dataIndex)) {
+        console.log("repetido");
+        chart.dispatchAction({
+          type: "downplay",
+          seriesIndex: params.seriesIndex,
+          dataIndex: params.dataIndex,
+        });
+
+        const indexToRemove = props.selections.indexOf(params.dataIndex);
+        props.selections.splice(indexToRemove, 1);
+      } else {
+        console.log("novo");
+        chart.dispatchAction({
+          type: "highlight",
+          seriesIndex: params.seriesIndex,
+          dataIndex: params.dataIndex,
+        });
+        props.selections.push(params.name);
+      }
+    }
+  });
+
   return <div id={id} style={style}></div>;
 };
 

@@ -5,6 +5,8 @@ import GenericChart from "../echarts/GenericChart";
 import "../../Styles/echarts.css";
 
 function PieChart(props) {
+  // eslint-disable-next-line
+  let selections = [];
   const [data, setData] = useState();
   const app = useContext(AppContext);
   const id = useRef("");
@@ -13,14 +15,17 @@ function PieChart(props) {
     const defs = {
       "By Product Subgroup": {
         dimension: "Product Group Desc",
+        resetFilterDimension: "Product Sub Group Desc",
         measure: "Sum([Sales Margin Amount])",
       },
       "By State": {
         dimension: "state_name",
+        resetFilterDimension: "state_name",
         measure: "Sum ([Sales Amount])",
       },
       "By Sales Rep": {
         dimension: "Sales Rep Name",
+        resetFilterDimension: "Sales Rep Name",
         measure: "Sum ([Budget Amount])",
       },
     };
@@ -104,7 +109,6 @@ function PieChart(props) {
         trigger: "item",
         className: "echarts-tooltip",
         formatter: (params) => {
-          console.log(params);
           return `
           <p>${params.seriesName}</p>
           <p class = 'left-align'>
@@ -117,9 +121,41 @@ function PieChart(props) {
           </p>
           `;
         },
-        // position: (point) => {
-        //   return [point[0], "0%"];
-        // },
+      },
+      toolbox: {
+        feature: {
+          myQlikResetFilter: {
+            show: true,
+            title: "Resetar Filtros",
+            iconStyle: {
+              borderColor: "white",
+              borderWidth: 2,
+            },
+            icon: ` path://M18 13C17.4904 11.9961 16.6247 11.1655 15.5334 10.6333C14.442
+                    10.1011 13.1842 9.89624 11.9494 10.0495C9.93127 10.3 8.52468 11.6116
+                    7 12.8186M7 10V13H10`,
+            onclick: () => {
+              app.field(getDefs().resetFilterDimension).clear();
+            },
+          },
+          myQlikApplyFilter: {
+            show: true,
+            title: "Aplicar Filtros",
+            iconStyle: {
+              borderColor: "white",
+              borderWidth: 2,
+            },
+            icon: ` path://M512 256l144.8 144.8-36.2 36.2-83-83v311.6h-51.2V354l-83
+                    83-36.2-36.2L512 256zM307.2 716.8V768h409.6v-51.2H307.2z`,
+            onclick: () => {
+              const arrOfSelections = selections.map((selection) => {
+                return { qText: selection };
+              });
+              console.log(arrOfSelections);
+              app.field(getDefs().dimension).selectValues(arrOfSelections);
+            },
+          },
+        },
       },
       color: ["#3b49ee", "#89f2f2", "#4191e1", "#2d669d", "#a4d2ff"],
       series: [
@@ -150,7 +186,7 @@ function PieChart(props) {
 
   if (!data) return "Carregando";
 
-  return <GenericChart option={getOption()} />;
+  return <GenericChart option={getOption()} selections={selections} />;
 }
 
 export default PieChart;
