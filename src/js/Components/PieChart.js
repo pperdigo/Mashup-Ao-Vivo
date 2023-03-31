@@ -2,6 +2,8 @@ import { useState, useContext, useRef, useCallback, useEffect } from "react";
 import { AppContext } from "../../App";
 import GenericChart from "../echarts/GenericChart";
 
+import "../../Styles/echarts.css";
+
 function PieChart(props) {
   const [data, setData] = useState();
   const app = useContext(AppContext);
@@ -100,6 +102,24 @@ function PieChart(props) {
       },
       tooltip: {
         trigger: "item",
+        className: "echarts-tooltip",
+        formatter: (params) => {
+          console.log(params);
+          return `
+          <p>${params.seriesName}</p>
+          <p class = 'left-align'>
+            <span class = 'dot' style = 'background-color: ${params.color}'></span>
+            ${params.name}
+            <span class = 'right-align bold'>
+                ${params.value.toLocaleString("pt-BR", { style: "currency", currency: "USD" })}
+                (${(params.percent / 100).toLocaleString("pt-BR", { style: "percent" })})
+            </span>
+          </p>
+          `;
+        },
+        // position: (point) => {
+        //   return [point[0], "0%"];
+        // },
       },
       color: ["#3b49ee", "#89f2f2", "#4191e1", "#2d669d", "#a4d2ff"],
       series: [

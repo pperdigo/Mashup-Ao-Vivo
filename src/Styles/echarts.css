@@ -1,0 +1,18 @@
+.echarts-tooltip span.dot{
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.echarts-tooltip p.left-align{
+    text-align: left;
+}
+
+.echarts-tooltip span.right-align{
+    margin-left: 50px
+}
+
+.echarts-tooltip .bold{
+    font-weight: bold;
+}
