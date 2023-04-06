@@ -4,8 +4,38 @@ import NavBar from "../Components/NavBar";
 import KPI from "../Components/KPI";
 import PieChart from "../Components/PieChart";
 import LineChart from "../Components/LineChart";
+//eslint-disable-next-line
+import { useEffect, useContext, useRef } from "react";
+import { AppContext } from "../../App";
 
 function Home() {
+  //eslint-disable-next-line
+  const app = useContext(AppContext);
+  //eslint-disable-next-line
+  const id = useRef("");
+  //   useEffect(() => {
+  //     const getMaxYear = async () => {
+  //       const reply = await app.createGenericObject({
+  //         maxYear: { qValueExpression: "MAX(Year)" },
+  //       });
+  //       console.log(reply);
+  //       id.current = reply.id;
+  //       return reply.layout.maxYear;
+  //     };
+  //     getMaxYear().then((maxYear) => {
+  //       app.field("Year").selectMatch(maxYear);
+  //     });
+
+  //     return () => {
+  //       app.destroySessionObject(id.current);
+  //     };
+  //     //eslint-disable-next-line
+  //   }, []);
+
+  useEffect(() => {
+    app.bookmark.apply("VUqRT");
+    //eslint-disable-next-line
+  }, []);
   return (
     <>
       <NavBar />
