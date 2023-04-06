@@ -104,7 +104,6 @@ function PieChart(props) {
         trigger: "item",
         className: "echarts-tooltip",
         formatter: (params) => {
-          console.log(params);
           return `
           <p>${params.seriesName}</p>
           <p class = 'left-align'>
@@ -192,9 +191,15 @@ function PieChart(props) {
     return option;
   };
 
+  // eslint-disable-next-line
+  const onClickFilterFunction = (params) => {
+    console.log("params", params);
+    app.field(getDefs().dimension).selectMatch(params.name);
+  };
+
   if (!data) return "Carregando";
 
-  return <GenericChart option={getOption()} />;
+  return <GenericChart option={getOption()} onClickFilterFunction={onClickFilterFunction} />;
 }
 
 export default PieChart;

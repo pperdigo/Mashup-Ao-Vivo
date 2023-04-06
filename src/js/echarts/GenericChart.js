@@ -7,17 +7,6 @@ const GenericChart = (props) => {
 
   const [chart, setChart] = useState(undefined);
 
-  //Listener para fazer o resize
-  useEffect(() => {
-    const updateDimensions = () => {
-      chart?.resize();
-    };
-    window.addEventListener("resize", updateDimensions);
-    return () => {
-      window.removeEventListener("resize", updateDimensions);
-    };
-  }, [chart]);
-
   //Inicialização do gráfico
   useEffect(() => {
     const renderChart = () => {
@@ -30,6 +19,10 @@ const GenericChart = (props) => {
       }
     };
     renderChart();
+
+    return () => {
+      echarts.dispose(chart);
+    };
     // eslint-disable-next-line
     }, [])
 
@@ -44,6 +37,32 @@ const GenericChart = (props) => {
     updateChart();
   }, [chart, props.notMerge, props.option]);
 
+  //Listener para fazer o resize
+  useEffect(() => {
+    const updateDimensions = () => {
+      chart?.resize();
+    };
+    window.addEventListener("resize", updateDimensions);
+    return () => {
+      window.removeEventListener("resize", updateDimensions);
+    };
+  }, [chart]);
+
+  //Bindar onclick
+  useEffect(() => {
+    const bindFilter = (params) => {
+      props?.onClickFilterFunction(params);
+    };
+
+    // chart?.on("click", bindFilter);
+    if (chart && props.onClickFilterFunction) {
+      chart.on("click", bindFilter);
+    }
+
+    return () => {
+      chart?.off("click");
+    };
+  });
   return <div id={id} style={style}></div>;
 };
 
