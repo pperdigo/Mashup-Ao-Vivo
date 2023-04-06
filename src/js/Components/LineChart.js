@@ -126,6 +126,32 @@ function LineChart(props) {
           },
         },
       ],
+      media: [
+        {
+          query: { minWidth: 0 },
+          option: {
+            grid: {
+              left: "20%",
+            },
+          },
+        },
+        {
+          query: { minWidth: 290 },
+          option: {
+            grid: {
+              left: "15%",
+            },
+          },
+        },
+        {
+          query: { minWidth: 400 },
+          option: {
+            grid: {
+              left: "10%",
+            },
+          },
+        },
+      ],
     };
 
     return option;

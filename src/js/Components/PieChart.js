@@ -126,7 +126,7 @@ function PieChart(props) {
         {
           name: "Access From",
           type: "pie",
-          radius: ["40%", "70%"],
+          //   radius: ["40%", "70%"],
           avoidLabelOverlap: false,
           itemStyle: {
             borderColor: "rgba(0,9,118,1)",
@@ -141,6 +141,50 @@ function PieChart(props) {
             show: false,
           },
           data: data,
+        },
+      ],
+      media: [
+        {
+          query: { minWidth: 0 },
+          option: {
+            series: [
+              {
+                radius: ["15%", "35%"],
+                labelLine: {
+                  length: 2,
+                  length2: 0,
+                },
+              },
+            ],
+          },
+        },
+        {
+          query: { minWidth: 290 },
+          option: {
+            series: [
+              {
+                radius: ["20%", "40%"],
+                labelLine: {
+                  length: 6,
+                  length2: 0,
+                },
+              },
+            ],
+          },
+        },
+        {
+          query: { minWidth: 400 },
+          option: {
+            series: [
+              {
+                radius: ["40%", "70%"],
+                labelLine: {
+                  length: 20,
+                  length2: 0,
+                },
+              },
+            ],
+          },
         },
       ],
     };
