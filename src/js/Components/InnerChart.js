@@ -2,8 +2,7 @@
 import * as echarts from "echarts";
 import "../../Styles/echarts.css";
 
-const innerChart = (app) => {
-  console.log("innerchart chamado");
+const innerChart = (app, tooltipClassName, selectedMonth) => {
   // eslint-disable-next-line
   const id = "innerChart";
 
@@ -18,113 +17,123 @@ const innerChart = (app) => {
       qDimensions: [
         {
           qDef: {
-            qFieldDefs: ["Month"],
-            qSortCriterias: [
-              {
-                qSortByNumeric: 1,
-              },
-            ],
+            qFieldDefs: ["Product Group Desc"],
           },
         },
       ],
       qMeasures: [
         {
           qDef: {
-            qDef: "Sum([Sales Margin Amount])",
+            qDef: `Sum({<Month = {${selectedMonth}}>}[Sales Margin Amount])`,
+          },
+          qSortBy: {
+            qSortByNumeric: -1,
           },
         },
       ],
       qSuppressZero: false,
       qSuppressMissing: false,
-      qInterColumnSortOrder: [0, 1],
+      qInterColumnSortOrder: [1, 0],
     });
   };
 
   const transformData = (reply) => {
-    console.log("reply", reply);
     const matrix = reply.layout.qHyperCube.qDataPages[0].qMatrix;
 
-    const data = [];
-    const axisData = [];
-
-    matrix.forEach((row) => {
-      axisData.push(row[0].qText);
-      data.push(row[1].qNum);
+    const data = matrix.map((row) => {
+      return { name: row[0].qText, value: row[1].qNum };
     });
 
-    return { axisData: axisData, data: data };
+    const totalValue = data.reduce((acum, curr) => acum + curr.value, 0);
+    const treshold = (30 / 360) * totalValue;
+
+    const others = { name: "Others", value: 0 };
+    let dataFiltered = [];
+
+    data.forEach((row) => {
+      if (row.value < treshold) {
+        others.value += row.value;
+      } else {
+        dataFiltered.push(row);
+      }
+    });
+
+    dataFiltered.push(others);
+
+    return dataFiltered;
   };
 
   const getOption = (data) => {
-    console.log("data", data);
     const option = {
       title: {
-        text: "Gráfico teste",
+        text: "Gráfico Interno",
         textStyle: {
           color: "white",
+          fontWeight: "bold",
         },
       },
-      tooltip: {
-        show: false,
-      },
-      xAxis: {
-        type: "category",
-        data: data.axisData,
-        axisLabel: {
-          color: "white",
-        },
-      },
-      yAxis: {
-        type: "value",
-        splitLine: {
-          lineStyle: {
-            type: "dashed",
-            color: "grey",
-            opacity: 0.3,
-          },
-        },
-        axisLabel: {
-          color: "white",
-          formatter: (value) => {
-            return (value / 1000000).toLocaleString("pt-BR", { maximumFractionDigits: 1 }) + " M";
-          },
-        },
-        min: (value) => {
-          return value.min - 100000;
-        },
-      },
+      color: ["#3b49ee", "#89f2f2", "#4191e1", "#2d669d", "#a4d2ff"],
       series: [
         {
-          data: data.data,
-          type: "line",
+          name: "Access From",
+          type: "pie",
+          avoidLabelOverlap: false,
           itemStyle: {
-            opacity: 0,
+            borderColor: "white",
+            borderWidth: 8,
           },
+          label: {
+            show: true,
+            position: "outside",
+            color: "black",
+          },
+          labelLine: {
+            show: false,
+          },
+          data: data,
         },
       ],
       media: [
         {
           query: { minWidth: 0 },
           option: {
-            grid: {
-              left: "20%",
-            },
+            series: [
+              {
+                radius: ["15%", "35%"],
+                labelLine: {
+                  length: 2,
+                  length2: 0,
+                },
+              },
+            ],
           },
         },
         {
           query: { minWidth: 290 },
           option: {
-            grid: {
-              left: "15%",
-            },
+            series: [
+              {
+                radius: ["20%", "40%"],
+                labelLine: {
+                  length: 6,
+                  length2: 0,
+                },
+              },
+            ],
           },
         },
         {
           query: { minWidth: 400 },
           option: {
-            grid: {
-              left: "10%",
-            },
+            series: [
+              {
+                radius: ["40%", "70%"],
+                labelLine: {
+                  length: 20,
+                  length2: 0,
+                },
+              },
+            ],
           },
         },
       ],
@@ -137,11 +146,14 @@ const innerChart = (app) => {
     .then((data) => getOption(data))
     .then((option) => {
       if (option) {
-        console.log("option", option);
-        const element = document.querySelector(`.${id}`);
-        console.log("element", element);
-        const myChart = echarts.init(element);
+        const element = document.querySelector(`.${tooltipClassName}`);
+        let myChart = echarts.getInstanceByDom(element);
+        if (myChart) {
+          echarts.dispose(myChart);
+        }
+        myChart = echarts.init(element);
         myChart.setOption(option);
+        myChart.resize();
       }
     });
 };

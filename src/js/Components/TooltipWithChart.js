@@ -12,6 +12,14 @@ const TooltipWithChart = () => {
   const app = useContext(AppContext);
 
   useEffect(() => {
+    const element = document.getElementById(id);
+    const myChart = echarts.init(element);
+    myChart.showLoading();
+
+    return () => echarts.dispose(document.getElementById(id));
+  }, []);
+
+  useEffect(() => {
     const getData = async () => {
       return await app.createCube({
         qInitialDataFetch: [
@@ -60,6 +68,7 @@ const TooltipWithChart = () => {
     };
 
     const getOption = (data) => {
+      const tooltipClassName = "innerChart";
       const option = {
         title: {
           text: "Gráfico teste",
@@ -69,11 +78,10 @@ const TooltipWithChart = () => {
         },
         tooltip: {
           show: true,
-          className: "innerChart",
-          formatter: () => {
-            console.log("tooltip");
-            innerChart(app);
-            return "a";
+          className: tooltipClassName,
+          formatter: (params) => {
+            innerChart(app, tooltipClassName, params.name);
+            return " ";
           },
         },
         xAxis: {
@@ -148,18 +156,18 @@ const TooltipWithChart = () => {
   }, []);
 
   useEffect(() => {
-    if (option) {
-      const element = document.getElementById(id);
-      const myChart = echarts.init(element);
-      myChart.setOption(option);
-    }
+    const element = document.getElementById(id);
+    const myChart = echarts.getInstanceByDom(element);
 
-    return () => echarts.dispose(document.getElementById(id));
+    if (option) {
+      myChart.setOption(option);
+      myChart.hideLoading();
+    }
   }, [option]);
 
   return (
     <>
-      <div id={id} style={{ width: "800px", height: "500px" }}></div>
+      <div id={id} style={{ width: "800px", height: "500px", paddingTop: "150px" }}></div>
     </>
   );
 };
