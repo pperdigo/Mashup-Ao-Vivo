@@ -1,7 +1,8 @@
 import "./App.css";
 import appPromise from "./js/qlik/QlikConnection";
 import Home from "./js/Pages/Home";
-import Page2 from "./js/Pages/TooltipWithChart";
+import Page2 from "./js/Pages/Page2";
+import MultipleSelections from "./js/Pages/MultipleSelections";
 import { useState, useEffect, createContext } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -16,6 +17,10 @@ const routes = createBrowserRouter([
   {
     path: "/tooltip-with-chart",
     element: <Page2 />,
+  },
+  {
+    path: "/multiple-selections",
+    element: <MultipleSelections />,
   },
 ]);
 function App() {

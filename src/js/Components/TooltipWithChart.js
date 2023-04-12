@@ -78,9 +78,13 @@ const TooltipWithChart = () => {
         },
         tooltip: {
           show: true,
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow",
+          },
           className: tooltipClassName,
           formatter: (params) => {
-            innerChart(app, tooltipClassName, params.name);
+            innerChart(app, tooltipClassName, params[0].name);
             return " ";
           },
         },
@@ -113,9 +117,9 @@ const TooltipWithChart = () => {
         series: [
           {
             data: data.data,
-            type: "line",
+            type: "bar",
             itemStyle: {
-              opacity: 0,
+              opacity: 1,
             },
           },
         ],
