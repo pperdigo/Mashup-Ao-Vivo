@@ -5,6 +5,7 @@ import Page2 from "./js/Pages/Page2";
 import MultipleSelections from "./js/Pages/MultipleSelections";
 import { useState, useEffect, createContext } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import HypercubePagination from "./js/Pages/HypercubePagination";
 
 require("bootstrap/dist/css/bootstrap.min.css");
 
@@ -21,6 +22,10 @@ const routes = createBrowserRouter([
   {
     path: "/multiple-selections",
     element: <MultipleSelections />,
+  },
+  {
+    path: "/hypercube-pagination",
+    element: <HypercubePagination />,
   },
 ]);
 function App() {
